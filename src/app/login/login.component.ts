@@ -20,10 +20,6 @@ export class LoginComponent implements OnInit {
 	}
 	
 	form: any = {
-		// email: "franchise@abc.com",
-		// password: "1234",
-		// email: "admin@abc.com",
-		// password: "1234",
 		email: "",
 		password: "",
 	};
