@@ -1,0 +1,27 @@
+<div class="pagecontent">
+	<h4 class="sect_head"> Orders </h4>
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col"># ID</th>
+				<th scope="col">Franchise Name</th>
+				<th scope="col">Total</th>
+				<th scope="col">Placed At</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of list">
+				<th scope="row">{{item.orderID}}</th>
+				<td>{{item.creator.name}}</td>
+				<td>{{item.total | currency:"INR"}}</td>
+				<td>{{item.placedAt | date:"medium"}}</td>
+				<td>
+					<button type="button" class="btn btn-outline-secondary" [routerLink]="'/orders/'+item.orderID">View</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>

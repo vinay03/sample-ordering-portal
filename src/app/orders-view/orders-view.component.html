@@ -1,0 +1,61 @@
+<div class="pagecontent" *ngIf="loaded">
+
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="javascript:" routerLink="/orders">All Orders</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Order #{{id}}</li>
+		</ol>
+	</nav>
+	
+
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-12">
+			<h4> Order ID : {{id}}</h4>
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-12">
+			<h3 class="text-right mb-0">{{info.status | OrderStatus}}</h3>
+		</div>
+	</div>
+	<hr>
+	
+	<div>By,</div>
+	<div class="ml-3">{{info.creator.name}} ({{info.creator.email}}) </div>
+
+
+	<h5 class="mt-5"> Items</h5>
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Product Name</th>
+				<th scope="col">Variant</th>
+				<th scope="col">Quantity</th>
+				<th class="text-right" scope="col">Item Total</th>
+			</tr>
+		</thead>
+
+		<tbody *ngFor="let productItem of items">
+			<tr *ngFor="let variantItem of productItem">
+				<td class="hideThisCell" rowspan="1000">{{products[variantItem.productID].name}}</td>
+				<td>{{variantItem.variant.name}}</td>
+				<td>{{variantItem.quantity}}</td>
+				<td class="text-right">{{variantItem.itemTotal | currency:"INR"}}</td>
+			</tr>
+		</tbody>
+
+		<tbody>
+			<tr>
+				<td class="text-right" colspan="3">Total : </td>
+				<td class="text-right">{{info.total | currency:"INR"}}</td>
+				</tr>
+		</tbody>
+
+	</table>
+	
+
+	<div class="text-right" *ngIf="info.approvedByUserID == 0">
+		<button class="btn btn-danger mr-3" type="button" id="button-addon2" (click)="performAction('reject')">Reject Order</button>
+		<button class="btn btn-success" type="button" id="button-addon2" (click)="performAction('approve')">Approve Order</button>
+	</div>
+
+</div>

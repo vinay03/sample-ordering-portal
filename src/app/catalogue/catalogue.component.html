@@ -1,0 +1,71 @@
+<div class="pagecontent">
+<h4 class="sect_head"> Catalogue </h4>
+
+<ul class="list-group">
+	<li class="list-group-item" *ngFor="let item of products">
+		<h4 class="sect_head">{{item.name}}</h4>
+		<ul class="list-group">
+			<li class="list-group-item" *ngFor="let item2 of item.variants">
+
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-6">
+							{{item2.name}}
+						</div>
+						<div class="col-lg-4 text-left">
+							{{item2.price | currency:"INR"}}
+							<ng-container *ngIf="cart.cart[item.productID+'-'+item2.variantID] != undefined">
+								x {{cart.cart[item.productID+'-'+item2.variantID]}} 
+								= {{item2.price * cart.cart[item.productID+'-'+item2.variantID]| currency:"INR"}}
+							</ng-container>
+						</div>
+						<div class="col-lg-2 text-right">
+							<ng-container *ngIf="cart.cart[item.productID+'-'+item2.variantID] == undefined">
+								<button type="button" class="btn btn-outline-secondary" (click)="setQuantity(item.productID, item2.variantID, 1)">Add</button>
+							</ng-container>
+							<ng-container *ngIf="cart.cart[item.productID+'-'+item2.variantID] != undefined">
+
+								<div class="input-group">
+									<div class="input-group-prepend" id="button-addon3">
+										<button class="btn btn-secondary" type="button" (click)="setQuantity(item.productID, item2.variantID, cart.cart[item.productID+'-'+item2.variantID]-1)">-</button>
+									</div>
+									<input type="text" disabled class="form-control" placeholder="" size="8" [(ngModel)]="cart.cart[item.productID+'-'+item2.variantID]">
+									<div class="input-group-append">
+										<button class="btn btn-secondary" type="button" id="button-addon2" (click)="setQuantity(item.productID, item2.variantID, cart.cart[item.productID+'-'+item2.variantID]+1)">+</button>
+									</div>
+								</div>
+								
+							</ng-container>
+						</div>
+					</div>
+				</div>
+				
+				
+			</li>
+		</ul>
+	</li>
+</ul>
+
+
+<div class="row">
+	<div class="col-lg-6"></div>
+	<div class="col-lg-4 p-3"><h4>{{total | currency:"INR"}}</h4></div>
+	<div class="col-lg-2"></div>
+</div>
+
+
+<div class="alert alert-danger text-right" role="alert" *ngIf="submitError != ''">
+	{{submitError}}
+</div>
+
+<div class="alert alert-success text-right" role="alert" *ngIf="submitSuccess != ''">
+	{{submitSuccess}}
+</div>
+
+
+<div class="text-right">
+	<button class="btn btn-danger mr-2" type="button" id="button-addon2" (click)="clearCart()">Clear Cart</button>
+	<button class="btn btn-primary" type="button" id="button-addon2" (click)="onSubmit()">Place Order</button>
+</div>
+
+</div>
